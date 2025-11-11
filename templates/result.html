@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>분석 결과</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>분석 결과</h1>
+  <img src="{{ url_for('static', filename=result_img.split('static/')[-1]) }}" width="60%">
+
+  <h3>감지된 손상 및 부위 (임계값: 20% 이상)</h3>
+  <table>
+    <tr>
+      <th>감지된 라벨</th>
+      <th>확률</th>
+    </tr>
+    {% for d in damage_info %}
+    <tr>
+      <td>{{ d.class_name }}</td>
+      <td>{{ d.probability }}</td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="2">감지된 손상/부위가 없습니다.</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <a href="/">다른 사진 분석하기</a>
+</body>
+</html>

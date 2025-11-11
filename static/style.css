@@ -1,0 +1,55 @@
+body {
+  font-family: 'Pretendard', sans-serif;
+  text-align: center;
+  background-color: #f8f9fa;
+  color: #333;
+  padding: 40px;
+}
+
+h1 {
+  color: #2F80ED;
+}
+
+.upload-box {
+  margin: 30px auto;
+  padding: 20px;
+  border: 2px dashed #2F80ED;
+  width: 40%;
+  background: #fff;
+  border-radius: 12px;
+}
+
+button {
+  margin-top: 20px;
+  background-color: #2F80ED;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #1E5FD1;
+}
+
+table {
+  margin: 20px auto;
+  border-collapse: collapse;
+  background: white;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px 20px;
+}
+th {
+  background: #eaf2ff;
+}
+a {
+  display: inline-block;
+  margin-top: 20px;
+  color: #2F80ED;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}

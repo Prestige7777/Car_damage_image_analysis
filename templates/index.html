@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Repair Estimator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>AI Repair Estimator</h1>
+  <p>사진 한 장으로 내 차 손상 부위를 확인하세요</p>
+
+  <form action="/predict" method="POST" enctype="multipart/form-data">
+    <div class="upload-box">
+      <input type="file" name="file" accept="image/*" required>
+      <button type="submit">사진 분석하기</button>
+    </div>
+  </form>
+</body>
+</html>
