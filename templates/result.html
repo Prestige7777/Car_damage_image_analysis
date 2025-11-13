@@ -2,31 +2,72 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>분석 결과</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>분석 결과 - 차량 손상 AI 분석</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h1>분석 결과</h1>
-  <img src="{{ url_for('static', filename=result_img.split('static/')[-1]) }}" width="60%">
+  <div class="container">
+    <div class="header">
+      <div class="icon">✅</div>
+      <h1>분석 완료</h1>
+      <p class="subtitle">AI가 차량 이미지를 분석했습니다</p>
+    </div>
 
-  <h3>감지된 손상 및 부위 (임계값: 20% 이상)</h3>
-  <table>
-    <tr>
-      <th>감지된 라벨</th>
-      <th>확률</th>
-    </tr>
-    {% for d in damage_info %}
-    <tr>
-      <td>{{ d.class_name }}</td>
-      <td>{{ d.probability }}</td>
-    </tr>
-    {% else %}
-    <tr>
-      <td colspan="2">감지된 손상/부위가 없습니다.</td>
-    </tr>
-    {% endfor %}
-  </table>
+    <div class="result-container">
+      <div class="image-section">
+        <h3>📷 분석한 이미지</h3>
+        <div class="result-image">
+          <img src="{{ url_for('static', filename=result_img.split('static/')[-1]) }}" alt="분석 이미지">
+        </div>
+      </div>
 
-  <a href="/">다른 사진 분석하기</a>
+      <div class="analysis-section">
+        <h3>🔍 감지된 손상 부위</h3>
+        <p class="threshold-info">신뢰도 20% 이상의 결과만 표시됩니다</p>
+        
+        {% if damage_info and damage_info[0].probability %}
+        <div class="damage-list">
+          {% for d in damage_info %}
+          <div class="damage-item">
+            <div class="damage-header">
+              <span class="damage-name">{{ d.class_name }}</span>
+              <span class="damage-probability">{{ d.probability }}</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: {{ d.probability }}"></div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-damage">
+          <div class="no-damage-icon">✨</div>
+          <h4>손상이 감지되지 않았습니다</h4>
+          <p>신뢰도 20% 이상의 손상 부위가 발견되지 않았습니다.<br>
+          다른 각도나 더 선명한 이미지로 다시 시도해보세요.</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <a href="/" class="btn-primary">
+        <span>🔄 다른 이미지 분석하기</span>
+      </a>
+    </div>
+
+    <div class="info-box">
+      <h4>💡 분석 결과 활용 팁</h4>
+      <ul>
+        <li>감지된 손상 부위를 정비소에 방문 시 참고하세요</li>
+        <li>여러 각도에서 촬영한 사진을 분석하면 더 정확합니다</li>
+        <li>밝은 곳에서 촬영한 선명한 사진이 좋습니다</li>
+      </ul>
+    </div>
+  </div>
 </body>
 </html>

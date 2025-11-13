@@ -2,18 +2,106 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>AI Repair Estimator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>차량 손상 AI 분석</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h1>AI Repair Estimator</h1>
-  <p>사진 한 장으로 내 차 손상 부위를 확인하세요</p>
-
-  <form action="/predict" method="POST" enctype="multipart/form-data">
-    <div class="upload-box">
-      <input type="file" name="file" accept="image/*" required>
-      <button type="submit">사진 분석하기</button>
+  <div class="container">
+    <div class="header">
+      <div class="icon">🚗</div>
+      <h1>차량 손상 AI 분석</h1>
+      <p class="subtitle">사진 한 장으로 차량 손상 부위를 빠르게 확인하세요</p>
     </div>
-  </form>
+
+    <form action="/predict" method="POST" enctype="multipart/form-data" id="uploadForm">
+      <div class="upload-area" id="uploadArea">
+        <input type="file" name="file" id="fileInput" accept="image/*" required hidden>
+        <div class="upload-content">
+          <div class="upload-icon">📸</div>
+          <h3>이미지를 선택하거나 드래그하세요</h3>
+          <p>JPG, PNG 파일 지원</p>
+          <button type="button" class="select-btn" onclick="document.getElementById('fileInput').click()">
+            파일 선택
+          </button>
+        </div>
+        <div class="preview-area" id="previewArea" style="display: none;">
+          <img id="preview" src="" alt="미리보기">
+          <button type="button" class="change-btn" onclick="document.getElementById('fileInput').click()">
+            다른 이미지 선택
+          </button>
+        </div>
+      </div>
+      <button type="submit" class="analyze-btn" id="analyzeBtn" disabled>
+        <span>🔍 분석 시작</span>
+      </button>
+    </form>
+
+    <div class="features">
+      <div class="feature-item">
+        <div class="feature-icon">⚡</div>
+        <h4>빠른 분석</h4>
+        <p>AI가 몇 초 만에 분석</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🎯</div>
+        <h4>정확한 감지</h4>
+        <p>32가지 손상 유형 인식</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">💡</div>
+        <h4>간편한 사용</h4>
+        <p>사진만 업로드하면 끝</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const uploadArea = document.getElementById('uploadArea');
+    const previewArea = document.getElementById('previewArea');
+    const preview = document.getElementById('preview');
+    const analyzeBtn = document.getElementById('analyzeBtn');
+
+    // 파일 선택 시
+    fileInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          preview.src = e.target.result;
+          document.querySelector('.upload-content').style.display = 'none';
+          previewArea.style.display = 'flex';
+          analyzeBtn.disabled = false;
+        }
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // 드래그 앤 드롭
+    uploadArea.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      uploadArea.classList.add('dragover');
+    });
+
+    uploadArea.addEventListener('dragleave', function(e) {
+      e.preventDefault();
+      uploadArea.classList.remove('dragover');
+    });
+
+    uploadArea.addEventListener('drop', function(e) {
+      e.preventDefault();
+      uploadArea.classList.remove('dragover');
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('image/')) {
+        fileInput.files = e.dataTransfer.files;
+        const event = new Event('change');
+        fileInput.dispatchEvent(event);
+      }
+    });
+  </script>
 </body>
 </html>

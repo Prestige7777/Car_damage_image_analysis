@@ -2,19 +2,38 @@
 venv*/
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
 
 # 대용량 / 불필요 파일
 *.h5
-*.pyd
 *.dll
 *.pb
 
 # 데이터 / 캐시
 dataset/
 data/
-*.jpg
-*.png
+
+# 업로드 및 결과 이미지
+static/uploads/*.jpg
+static/uploads/*.png
+static/results/*.jpg
+static/results/*.png
+
+# 로그 파일
+*.log
+error.log
+
+# 보안 키 파일
+*.pem
+*.key
+*.crt
 
 # IDE 설정
 .vscode/
 .idea/
+*.code-workspace
+
+# OS 파일
+.DS_Store
+Thumbs.db
