@@ -162,7 +162,7 @@ FLASK_DEBUG=1
 
 ## 👥 개발자
 
-- **Your Name** - [GitHub](https://github.com/your-username)
+- **프레스티지** - [GitHub](https://github.com/Prestige7777)
 
 ## 🙏 감사의 말
 
