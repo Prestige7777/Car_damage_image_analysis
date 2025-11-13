@@ -32,6 +32,13 @@ def predict():
     # 모델 예측 (결과 이미지 경로, 손상 부위 리스트 반환)
     result_path, damage_info = predict_damage(filepath, app.config['RESULT_FOLDER'])
     
+    # 경로를 static 폴더 기준 상대 경로로 변환
+    if result_path:
+        # Windows와 Linux 모두 지원
+        result_path = result_path.replace('\\', '/')
+        if result_path.startswith('static/'):
+            result_path = result_path[7:]  # 'static/' 제거
+    
     return render_template('result.html',
                            result_img=result_path,
                            damage_info=damage_info)
